@@ -15,6 +15,8 @@ public class DatacrimeRequest {
 //    private String account;
 //
 //    private String search;
+@Column(name = "user_request")
+private String account;
 
     @Column(name = "ip_address")
     private String ipAddress;

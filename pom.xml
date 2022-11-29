@@ -49,6 +49,11 @@
         <!-- Librerias lucene -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>6.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-spatial-extras</artifactId>
             <version>6.6.1</version>
         </dependency>

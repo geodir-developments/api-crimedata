@@ -2,6 +2,7 @@ package com.geodir.apidatacrime.apidatacrime.web;
 
 import com.geodir.apidatacrime.apidatacrime.domain.basic.DatacrimeRequest;
 import com.geodir.apidatacrime.apidatacrime.domain.basic.DatacrimeRequestService;
+import com.geodir.apidatacrime.apidatacrime.domain.findNearestCentroid.FindNearestCentroidService;
 import com.geodir.apidatacrime.apidatacrime.domain.searchbyfields.DatacrimeGroup;
 import com.geodir.apidatacrime.apidatacrime.domain.searchbyfields.ResponseDatacrimeByFields;
 import com.geodir.apidatacrime.apidatacrime.domain.security.UserServiceOauth2;
@@ -24,6 +25,7 @@ import java.util.List;
 public class DataCrimeController {
     private DatacrimeRequestService datacrimeRequestService;
     private final DatacrimeServiceByFields datacrimeServiceByFields;
+    private FindNearestCentroidService findNearestCentroidService;
 
     private final UserServiceOauth2 userServiceOauth2;
     @GetMapping("/json")
@@ -46,15 +48,17 @@ public class DataCrimeController {
         }
 
         //identificar usuario
+        //identificar usuario
         String account = userServiceOauth2.getUserAccountByKey(key);
 
-        List<DatacrimeGroup> datacrimeGroupList = datacrimeServiceByFields
+        List<DatacrimeGroup>  datacrimeGroupList = findNearestCentroidService
                 .search(latlon);
         String grid_code ="";
         ResponseDatacrimeByFields responseDatacrimeByFields = new ResponseDatacrimeByFields();
         if(datacrimeGroupList.size()>0){
-            grid_code = datacrimeGroupList.get(0).getListDatacrimeFields().get(0).getValue().toString();
-
+            grid_code = datacrimeGroupList.get(0).getListDatacrimeFields().get(0).getValue().toString() != null ?
+                    datacrimeGroupList.get(0).getListDatacrimeFields().get(0).getValue().toString() : null;
+            System.out.println("grid_code: " +grid_code);
             responseDatacrimeByFields.setStatus("OK");
             responseDatacrimeByFields.setDatacrimeGroupList(datacrimeGroupList);
         }else {
@@ -66,14 +70,14 @@ public class DataCrimeController {
         String[] arrayLatlon = latlon.split(",");
         String latitude = arrayLatlon[0];
         String longitude = arrayLatlon[1];
-        saveDatacrimeRequest(latitude, longitude, remoteAddr, info, grid_code);
-
+        saveDatacrimeRequest(account,latitude, longitude, remoteAddr, info, grid_code);
 
         return new ResponseEntity<>(responseDatacrimeByFields, HttpStatus.OK);
     }
-    public void saveDatacrimeRequest(String latitud, String longitud, String ipRequest, String info, String grid_code) {
+    public void saveDatacrimeRequest(String account, String latitud, String longitud, String ipRequest, String info, String grid_code) {
 
         DatacrimeRequest datacrimeRequest = new DatacrimeRequest();
+        datacrimeRequest.setAccount(account);
         datacrimeRequest.setLatitude(latitud);
         datacrimeRequest.setLongitude(longitud);
         datacrimeRequest.setIpAddress(ipRequest);
