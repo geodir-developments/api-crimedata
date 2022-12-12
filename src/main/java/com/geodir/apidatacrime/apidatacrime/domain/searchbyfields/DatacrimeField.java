@@ -7,7 +7,9 @@ import lombok.Data;
 public class DatacrimeField {
     private String name;
     private Object value;
+    @JsonIgnore
     public String typeField;
+    @JsonIgnore
     private String description;
 
     @JsonIgnore
