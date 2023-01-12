@@ -9,7 +9,7 @@ public class DatacrimeField {
     private Object value;
     @JsonIgnore
     public String typeField;
-    @JsonIgnore
+
     private String description;
 
     @JsonIgnore

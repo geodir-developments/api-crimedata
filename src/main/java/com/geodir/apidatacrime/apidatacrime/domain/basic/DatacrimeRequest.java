@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 @Entity
-@Table(name = "crimedata_request" ,  schema = "inei")
+@Table(name = "datacrime_request" ,  schema = "inei")
 @Data
 public class DatacrimeRequest {
     @Id

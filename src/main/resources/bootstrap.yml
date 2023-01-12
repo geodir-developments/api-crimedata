@@ -2,9 +2,9 @@ spring:
   application:
     name: crimedata-service
   profiles:
-#    active: dev
-    active: prod
+    active: dev
+#    active: prod
   cloud:
     config:
-      uri: http://3.21.188.213:8071
-#      uri: http://localhost:8071
+#      uri: http://3.21.188.213:8071
+      uri: http://localhost:8071

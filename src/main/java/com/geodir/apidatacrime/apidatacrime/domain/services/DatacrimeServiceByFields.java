@@ -44,7 +44,7 @@ public class DatacrimeServiceByFields {
     }
     private List<DatacrimeGroup> getGroupWithFields(){
 
-        List<FieldsEntity> fieldsEntityList= (List<FieldsEntity>) fieldsRepository.findAll();
+        List<FieldsEntity> fieldsEntityList= fieldsRepository.findAllFilesEnabled();
 
         List<String> groupsList
                 = fieldsEntityList.stream().map(FieldsEntity::getGroup).distinct().collect(
